@@ -2,9 +2,27 @@ package srp
 
 import srp.fakes.OrganizationId
 import srp.fakes.ProductCityLevelResponseDto
+import srp.fakes.ProductVariant
 import srp.fakes.ProductVariantRepository
 import srp.fakes.ProductVariantZoneRepository
 import srp.fakes.ZoneType
+
+
+interface Organization {
+    fun getProductVariant(): List<ProductVariant>
+}
+
+class Industrial : Organization {
+    override fun getProductVariant(): List<ProductVariant> {
+        return listOf()
+    }
+}
+
+class Retail : Organization {
+    override fun getProductVariant(): List<ProductVariant> {
+        return listOf()
+    }
+}
 
 
 class ProductService(
@@ -19,6 +37,9 @@ class ProductService(
         organizationId: String
     ) : List<ProductCityLevelResponseDto> {
         try {
+            // getOrganization(organization)
+            // org.getProducVarint
+            //
             return if(organizationId == OrganizationId.BAZAAR_INDUSTRIAL){
 
                 val productVariants = productVariantRepository.findByIdIn(variantIds)
