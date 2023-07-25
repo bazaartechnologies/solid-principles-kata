@@ -1,11 +1,7 @@
 package ocp;
 
 
-import ocp.fakes.NotificationChannel;
-import ocp.fakes.NotificationLog;
-import ocp.fakes.NotificationPayloadDto;
-import ocp.fakes.NotificationRepository;
-import ocp.fakes.SlackGateway;
+import ocp.fakes.*;
 
 public class NotificationService {
 
@@ -25,11 +21,11 @@ public class NotificationService {
 
         try {
             if (channel == NotificationChannel.SMS) {
-                sms.sendNotification(payload);
+                new SMSGateway().sendNotification(payload);
             } else if (channel == NotificationChannel.SLACK) {
                 new SlackGateway().sendNotification(payload);
-            } else if (channel == NotificationChannel.SMS_M3) {
-                email.sendNotification(payload);
+            } else if (channel == NotificationChannel.SMTP) {
+                new SMTPEmailGateway().sendNotification(payload);
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
