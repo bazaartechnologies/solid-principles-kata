@@ -1,9 +1,15 @@
 package ocp;
 
 
+import ocp.fakes.NotificationChannel;
+import ocp.fakes.NotificationLog;
+import ocp.fakes.NotificationPayloadDto;
+import ocp.fakes.NotificationRepository;
+import ocp.fakes.SlackGateway;
+
 public class NotificationService {
 
-    private final NotificationRepository notificationRepository;
+    public final NotificationRepository notificationRepository;
 
     public NotificationService(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
@@ -12,23 +18,21 @@ public class NotificationService {
     public void sendNotification(final String source, final NotificationChannel channel, final NotificationPayloadDto payload) throws Exception {
         //update the referenceId if its present
 
-        final String referenceId = ofNullable(payload.getFromMeta(REFERENCE_ID)).orElse("NA");
-        notificationLog.setReferenceId(referenceId);
+        final String referenceId = "ref";
+        NotificationLog notificationLog = new NotificationLog("refId", "sender", "receiver");
 
         notificationLog = notificationRepository.save(notificationLog);
-        payload.setMessageId(notificationLog.getId());
 
         try {
-            if (channel == NotificationChannel.sms) {
+            if (channel == NotificationChannel.SMS) {
                 sms.sendNotification(payload);
-            } else if (channel == NotificationChannel.otp) {
-                otp.sendNotification(payload);
-            } else if (channel == NotificationChannel.email) {
+            } else if (channel == NotificationChannel.SLACK) {
+                new SlackGateway().sendNotification(payload);
+            } else if (channel == NotificationChannel.SMS_M3) {
                 email.sendNotification(payload);
             }
-            notificationLog.setResponse(response);
         } catch (final Exception ex) {
-            notificationLog.setResponse(new ChannelResponseDto(ChannelResponse.ERROR, ex.getMessage()));
+            ex.printStackTrace();
         } finally {
             notificationRepository.save(notificationLog);
         }
