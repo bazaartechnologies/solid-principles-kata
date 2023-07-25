@@ -1,14 +1,15 @@
-package src.main
+package srp
 
-import com.bazaar.api.catalog.constant.OrganizationId
-import com.bazaar.api.catalog.controller.dto.response.ProductCityLevelResponseDto
-import com.bazaar.api.catalog.exception.FailedToGetProductsCityLevelDetailsByCityIdAndVariantIds
-import com.bazaar.api.common.constant.ZoneType
+import srp.fakes.OrganizationId
+import srp.fakes.ProductCityLevelResponseDto
+import srp.fakes.ProductVariantRepository
+import srp.fakes.ProductVariantZoneRepository
+import srp.fakes.ZoneType
 
 
 class ProductService(
-    val productVariantZoneRepository: ProductVariantZoneRepository,
-    val productVariantRepository: ProductVariantRepository,
+    private val productVariantZoneRepository: ProductVariantZoneRepository,
+    private val productVariantRepository: ProductVariantRepository,
 ) {
 
     fun fetchProductsCityLevelDetails(
@@ -34,7 +35,7 @@ class ProductService(
             }
 
         } catch (ex : Exception){
-            throw FailedToGetProductsCityLevelDetailsByCityIdAndVariantIds(zoneId, variantIds, ex)
+            throw ex
         }
     }
 }
