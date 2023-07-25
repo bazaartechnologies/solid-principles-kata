@@ -1,6 +1,8 @@
 package ocp.fakes;
 
-public class SMTPEmailGateway {
+import ocp.gateway.NotificationGateway;
+
+public class SMTPEmailGateway  implements NotificationGateway {
 
     public void sendNotification(NotificationPayloadDto payloadDto) {
         // some logic here

@@ -1,7 +1,9 @@
 package ocp.fakes;
 
 
-public class SlackGateway {
+import ocp.gateway.NotificationGateway;
+
+public class SlackGateway  implements NotificationGateway {
 
     public void sendNotification(NotificationPayloadDto payload) {
         // some logic here

@@ -1,14 +1,20 @@
 package ocp;
 
 
-import ocp.fakes.*;
+import ocp.fakes.NotificationChannel;
+import ocp.fakes.NotificationLog;
+import ocp.fakes.NotificationPayloadDto;
+import ocp.fakes.NotificationRepository;
+import ocp.gateway.NotificationGateway;
 
 public class NotificationService {
 
     public final NotificationRepository notificationRepository;
+    private final NotificationGatewayFactory notificationGatewayFactory;
 
-    public NotificationService(NotificationRepository notificationRepository) {
+    public NotificationService(NotificationRepository notificationRepository, NotificationGatewayFactory notificationGatewayFactory) {
         this.notificationRepository = notificationRepository;
+        this.notificationGatewayFactory = notificationGatewayFactory;
     }
 
     public void sendNotification(final String source, final NotificationChannel channel, final NotificationPayloadDto payload) throws Exception {
@@ -20,13 +26,8 @@ public class NotificationService {
         notificationLog = notificationRepository.save(notificationLog);
 
         try {
-            if (channel == NotificationChannel.SMS) {
-                new SMSGateway().sendNotification(payload);
-            } else if (channel == NotificationChannel.SLACK) {
-                new SlackGateway().sendNotification(payload);
-            } else if (channel == NotificationChannel.SMTP) {
-                new SMTPEmailGateway().sendNotification(payload);
-            }
+            NotificationGateway notificationGateway = notificationGatewayFactory.getNotificationGateway(channel);
+            notificationGateway.sendNotification(payload);
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
