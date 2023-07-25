@@ -17,25 +17,36 @@ class ProductService(
         zoneId: String,
         variantIds: List<String>,
         organizationId: String
-    ) : List<ProductCityLevelResponseDto> {
+    ): List<ProductCityLevelResponseDto> {
         try {
-            return if(organizationId == OrganizationId.BAZAAR_INDUSTRIAL){
+            if (organizationId == OrganizationId.BAZAAR_INDUSTRIAL)
+                return getProductCityLevelResponseDtosForIndustrial(variantIds)
 
-                val productVariants = productVariantRepository.findByIdIn(variantIds)
+            return getProductCityLevelResponseDtos(zoneType, zoneId, variantIds)
 
-                productVariants.map { productVariant ->
-                    ProductCityLevelResponseDto.createFrom(productVariant)
-                }.distinctBy { it.variantId }
-            } else{
-                val productVariantZones = productVariantZoneRepository.findByZoneTypeAndZoneIdAndVariantIdIn(zoneType, zoneId, variantIds)
-
-                productVariantZones.map { productVariantZone ->
-                    ProductCityLevelResponseDto.createFrom(productVariantZone)
-                }.distinctBy { it.variantId }
-            }
-
-        } catch (ex : Exception){
+        } catch (ex: Exception) {
             throw ex
         }
+    }
+
+    private fun getProductCityLevelResponseDtos(
+        zoneType: ZoneType,
+        zoneId: String,
+        variantIds: List<String>
+    ): List<ProductCityLevelResponseDto> {
+        val productVariantZones =
+            productVariantZoneRepository.findByZoneTypeAndZoneIdAndVariantIdIn(zoneType, zoneId, variantIds)
+
+        return productVariantZones.map { productVariantZone ->
+            ProductCityLevelResponseDto.createFrom(productVariantZone)
+        }.distinctBy { it.variantId }
+    }
+
+    private fun getProductCityLevelResponseDtosForIndustrial(variantIds: List<String>): List<ProductCityLevelResponseDto> {
+        val productVariants = productVariantRepository.findByIdIn(variantIds)
+
+        return productVariants.map { productVariant ->
+            ProductCityLevelResponseDto.createFrom(productVariant)
+        }.distinctBy { it.variantId }
     }
 }
