@@ -46,4 +46,12 @@ public class ProductVariant {
     public ProductVariant() {
 
     }
+
+    public ProductVariant(String id, String description, Double originalPrice, Double displayPrice, Double retailPrice) {
+        this.id = id;
+        this.description = description;
+        this.originalPrice = originalPrice;
+        this.displayPrice = displayPrice;
+        this.retailPrice = retailPrice;
+    }
 }

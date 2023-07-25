@@ -53,6 +53,14 @@ public class ProductVariantZone {
     public ProductVariantZone() {
     }
 
-
-
+    public ProductVariantZone(String variantId, ZoneType zoneType, String zoneId, String description, Double priceActual, Double priceDiscounted, Double priceRetail, Double costPerItem) {
+        this.variantId = variantId;
+        this.zoneType = zoneType;
+        this.zoneId = zoneId;
+        this.description = description;
+        this.priceActual = priceActual;
+        this.priceDiscounted = priceDiscounted;
+        this.priceRetail = priceRetail;
+        this.costPerItem = costPerItem;
+    }
 }

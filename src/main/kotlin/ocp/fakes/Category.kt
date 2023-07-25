@@ -1,4 +1,4 @@
-package cohesion.fakes
+package ocp.fakes
 
 data class Category(
     val name: String,
