@@ -4,15 +4,15 @@ import lsp.fakes.*
 
 class TopupService {
 
-    fun performTopUp(serviceProvider: JazzTopup, amount: Int) {
+    fun performTopUp(serviceProvider: TopUp, amount: Int) {
         serviceProvider.topUp(amount)
     }
 }
 
 fun main() {
-    val jazzProvider = JazzTopup()
-    val ufoneProvider: JazzTopup = UfoneTopup()
-    val zongProvider: JazzTopup = ZongTopup()
+    val jazzProvider = JazzTopup(20.0)
+    val ufoneProvider = UfoneTopup(20.0)
+    val zongProvider = ZongTopup(20.0)
 
     val topUpService = TopupService()
     topUpService.performTopUp(jazzProvider, 100)

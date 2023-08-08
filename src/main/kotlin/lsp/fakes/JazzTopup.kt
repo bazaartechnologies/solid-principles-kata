@@ -1,13 +1,14 @@
 package lsp.fakes
 
-open class JazzTopup {
+open class JazzTopup(override val taxDetail: Double): TopUp() {
 
-    private val jazzTaxDetail: Double = 20.0
-    fun getTaxDetails() {
-        println("Jazz tax details: $jazzTaxDetail")
+
+    override fun getTaxDetails(amount: Int) {
+        println("Jazz tax details: $taxDetail")
     }
-    open fun topUp(amount: Int) {
-        val netTopUp = amount - jazzTaxDetail
+
+    override fun topUp(amount: Int) {
+        val netTopUp = amount - taxDetail
         println("Jazz top-up with amount: $netTopUp")
     }
 }

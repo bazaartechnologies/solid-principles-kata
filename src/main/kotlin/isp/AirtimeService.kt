@@ -1,15 +1,15 @@
 package isp
 
 import isp.fakes.AirtimeType
-import isp.fakes.EasyLoad
-import isp.fakes.Package
+import isp.fakes.UserEasyLoad
+import isp.fakes.UserPackage
 
 class AirtimeService {
 
     fun getAirtimeDto(type: AirtimeType) {
         when (type) {
-            AirtimeType.EASYLOAD -> EasyLoad()
-            AirtimeType.PACKAGE -> Package()
+            AirtimeType.EASYLOAD -> UserEasyLoad()
+            AirtimeType.PACKAGE -> UserPackage()
         }
     }
 }
