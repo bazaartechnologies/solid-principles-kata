@@ -1,11 +1,25 @@
 package ocp;
 
 
-import ocp.fakes.*;
+import ocp.fakes.NotificationChannel;
+import ocp.fakes.NotificationLog;
+import ocp.fakes.NotificationPayloadDto;
+import ocp.fakes.NotificationRepository;
+import ocp.fakes.SMSGateway;
+import ocp.fakes.SMTPEmailGateway;
+import ocp.fakes.SlackGateway;
+
+import java.util.Map;
+
 
 public class NotificationService {
 
     public final NotificationRepository notificationRepository;
+    private Map<NotificationChannel, NotificationGateway> notificationGatewayMap = Map.of(
+            NotificationChannel.SMS, new SMSGateway(),
+            NotificationChannel.SLACK, new SlackGateway(),
+            NotificationChannel.SMTP, new SMSGateway()
+    );
 
     public NotificationService(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
@@ -20,17 +34,16 @@ public class NotificationService {
         notificationLog = notificationRepository.save(notificationLog);
 
         try {
-            if (channel == NotificationChannel.SMS) {
-                new SMSGateway().sendNotification(payload);
-            } else if (channel == NotificationChannel.SLACK) {
-                new SlackGateway().sendNotification(payload);
-            } else if (channel == NotificationChannel.SMTP) {
-                new SMTPEmailGateway().sendNotification(payload);
-            }
+            NotificationGateway notificationGateway = getNotificationGateway(channel);
+            notificationGateway.sendNotification(payload);
         } catch (final Exception ex) {
             ex.printStackTrace();
         } finally {
             notificationRepository.save(notificationLog);
         }
+    }
+
+    private NotificationGateway getNotificationGateway(NotificationChannel channel) {
+        return this.notificationGatewayMap.get(channel);
     }
 }

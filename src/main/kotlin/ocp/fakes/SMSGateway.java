@@ -1,8 +1,11 @@
 package ocp.fakes;
 
-public class SMSGateway {
+import ocp.NotificationGateway;
 
-    public void sendNotification(NotificationPayloadDto dto) {
+public class SMSGateway implements NotificationGateway {
+
+    @Override
+     public void sendNotification(NotificationPayloadDto dto) {
         // some logic here
     }
 

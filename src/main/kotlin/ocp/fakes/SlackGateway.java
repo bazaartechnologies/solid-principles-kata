@@ -1,8 +1,11 @@
 package ocp.fakes;
 
 
-public class SlackGateway {
+import ocp.NotificationGateway;
 
+public class SlackGateway implements NotificationGateway {
+
+    @Override
     public void sendNotification(NotificationPayloadDto payload) {
         // some logic here
     }
