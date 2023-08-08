@@ -1,7 +1,9 @@
 package dip.fakes
 
-class PayPalPaymentProcessor {
-    fun processPayment() {
+import dip.PaymentProcessor
+
+class PayPalPaymentProcessor : PaymentProcessor {
+    override fun processPayment() {
         // Logic for PayPal payment processing
     }
 }

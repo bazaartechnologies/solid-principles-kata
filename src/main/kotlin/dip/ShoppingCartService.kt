@@ -4,19 +4,29 @@ import dip.fakes.BitcoinPaymentProcessor
 import dip.fakes.CreditCardPaymentProcessor
 import dip.fakes.PayPalPaymentProcessor
 
+interface PaymentProcessor {
+    fun processPayment()
+}
+
 class ShoppingCartService {
 
-    private val creditCardPaymentProcessor = CreditCardPaymentProcessor()
-    private val payPalPaymentProcessor = PayPalPaymentProcessor()
-    private val bitcoinPaymentProcessor = BitcoinPaymentProcessor()
-
     fun checkout(paymentOption: String) {
-        when (paymentOption) {
-            "creditCard" -> creditCardPaymentProcessor.processPayment()
-            "payPal" -> payPalPaymentProcessor.processPayment()
-            "bitcoin" -> bitcoinPaymentProcessor.processPayment()
-            else -> throw IllegalArgumentException("Invalid payment option")
-        }
+        val paymentProcessor = PaymentProcessorProvider.provide(paymentOption)
+        paymentProcessor.processPayment()
     }
 
 }
+
+object PaymentProcessorProvider {
+
+    fun provide(paymentOption: String): PaymentProcessor {
+        return when (paymentOption) {
+            "creditCard" -> CreditCardPaymentProcessor()
+            "payPal" -> PayPalPaymentProcessor()
+            "bitcoin" -> BitcoinPaymentProcessor()
+            else -> throw IllegalArgumentException("Invalid payment option")
+        }
+
+    }
+}
+
