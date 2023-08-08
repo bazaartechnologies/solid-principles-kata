@@ -1,11 +1,13 @@
 package lsp.fakes
 
-class JazzTopup : TopupRequestDto() {
+open class JazzTopup {
 
-    override fun getTaxPercentage(): Int {
-        return 20
+    private val jazzTaxDetail: Double = 20.0
+    fun getJazzTaxDetails() {
+        println("Jazz tax details: $jazzTaxDetail")
     }
-    override fun retryTopup() {
-        TODO("Not yet implemented")
+    open fun topUp(amount: Int) {
+        val netTopUp = amount - jazzTaxDetail
+        println("Jazz top-up with amount: $netTopUp")
     }
 }

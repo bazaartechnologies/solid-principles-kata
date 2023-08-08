@@ -2,30 +2,20 @@ package lsp
 
 import lsp.fakes.*
 
-class TopupService(
-    topupGateway: TopupGateway,
-    apiKey: String
-) {
-    private val topupGateway: TopupGateway
-    private val apiKey: String
+class TopupService {
 
-    init {
-        this.topupGateway = topupGateway
-        this.apiKey = apiKey
+    fun performTopUp(serviceProvider: JazzTopup, amount: Int) {
+        serviceProvider.topUp(amount)
     }
+}
 
-    fun createTopupRequest(
-        userId: String?,
-        userChannel: UserChannel?,
-        requestPayload: TopupRequestDto
-    ): PaymentResponseDto {
-        return try {
-            val tax = requestPayload.getTaxPercentage()
-            val response: PaymentResponseDto =
-                topupGateway.createTopupRequest(apiKey, userId, userChannel, requestPayload)
-            response
-        } catch (exception: Exception) {
-            throw TopupCreationFailedException(userId, exception)
-        }
-    }
+fun main() {
+    val jazzProvider = JazzTopup()
+    val ufoneProvider: JazzTopup = UfoneTopup()
+    val zongProvider: JazzTopup = ZongTopup()
+
+    val topUpService = TopupService()
+    topUpService.performTopUp(jazzProvider, 100)
+    topUpService.performTopUp(ufoneProvider, 100)
+    topUpService.performTopUp(zongProvider, 100)
 }
