@@ -1,7 +1,7 @@
 package dip.fakes
 
-class MasterCreditCardPaymentProcessor {
-    fun processPayment() {
+class MasterCreditCardPaymentProcessor : IPaymentProcessor{
+    override fun processPayment() {
         println("Master Credit Card payment processor started")
     }
 }

@@ -1,7 +1,7 @@
 package dip.fakes
 
-class PayPalPaymentProcessor {
-    fun processPayment() {
+class PayPalPaymentProcessor : IPaymentProcessor {
+    override fun processPayment() {
         println("Paypal payment processor started")
     }
 }
