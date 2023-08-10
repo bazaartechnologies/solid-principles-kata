@@ -2,6 +2,6 @@ package dip.fakes
 
 class BitcoinPaymentProcessor {
     fun processPayment() {
-        // Logic for PayPal payment processing
+        println("Bitcoin Credit Card payment processor started")
     }
 }
