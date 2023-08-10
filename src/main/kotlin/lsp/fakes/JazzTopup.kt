@@ -1,6 +1,6 @@
 package lsp.fakes
 
-open class JazzTopup {
+open class JazzTopup{
 
     private val jazzTaxDetail: Double = 20.0
     fun getTaxDetails() {
