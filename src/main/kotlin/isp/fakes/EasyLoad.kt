@@ -1,6 +1,6 @@
 package isp.fakes
 
-class EasyLoad: Airtime {
+class EasyLoad : IEasyLoad {
     override fun getTelcoId(): String {
         return "telco-id-1"
     }
@@ -11,10 +11,6 @@ class EasyLoad: Airtime {
 
     override fun getPhoneNumber(): String {
         return "03001234567"
-    }
-
-    override fun getPackageId(): String {
-        return ""
     }
 
     override fun getEasyloadId(): String {

@@ -1,6 +1,6 @@
 package isp.fakes
 
-class Package: Airtime {
+class Package: IPackage {
     override fun getTelcoId(): String {
         return "telco-id-2"
     }
@@ -15,10 +15,6 @@ class Package: Airtime {
 
     override fun getPackageId(): String {
         return "package-1"
-    }
-
-    override fun getEasyloadId(): String {
-        return ""
     }
 
     override fun getAmount(): Int {
