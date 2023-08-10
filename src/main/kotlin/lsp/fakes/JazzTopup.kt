@@ -3,7 +3,7 @@ package lsp.fakes
 open class JazzTopup {
 
     private val jazzTaxDetail: Double = 20.0
-    fun getJazzTaxDetails() {
+    fun getTaxDetails() {
         println("Jazz tax details: $jazzTaxDetail")
     }
     open fun topUp(amount: Int) {
