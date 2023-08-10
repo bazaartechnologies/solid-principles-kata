@@ -2,8 +2,8 @@ package lsp.fakes
 
 class UfoneTopup : JazzTopup() {
 
-    private val ufoneTaxDetail: Double = 20.0
+    private val taxDetail: Double = 10.0
     fun getTaxDetails(amount: Int) {
-        println("Ufone tax details: $ufoneTaxDetail")
+        println("Ufone tax details: $taxDetail")
     }
 }
